@@ -1,7 +1,7 @@
 'use strict';
 require('dotenv').config();
 const path=require('node:path'),crypto=require('node:crypto'),express=require('express'),helmet=require('helmet'),cookieParser=require('cookie-parser');
-const jwt=require('jsonwebtoken'),bcrypt=require('bcryptjs'),multer=require('multer'),sanitizeHtml=require('sanitize-html');
+const jwt=require('jsonwebtoken'),bcrypt=require('bcryptjs'),multer=require('multer');
 const {rateLimit}=require('express-rate-limit'),{z}=require('zod'),{neon}=require('@neondatabase/serverless');
 
 const isProd=process.env.NODE_ENV==='production',PORT=Number(process.env.PORT||3000);
@@ -30,7 +30,7 @@ const app=express();app.disable('x-powered-by');app.set('trust proxy',1);
 app.use(helmet({contentSecurityPolicy:{directives:{defaultSrc:["'self'"],scriptSrc:["'self'"],styleSrc:["'self'"],imgSrc:["'self'",'data:','https:'],mediaSrc:["'self'",'blob:','https://raw.githubusercontent.com'],connectSrc:["'self'",'https://raw.githubusercontent.com'],objectSrc:["'none'"],baseUri:["'none'"],frameAncestors:["'none'"]}}}));
 app.use(express.json({limit:'32kb'}),express.urlencoded({extended:false,limit:'32kb'}),cookieParser());
 const authLimit=rateLimit({windowMs:900000,limit:20}),writeLimit=rateLimit({windowMs:900000,limit:60});
-const clean=(v,n=200)=>sanitizeHtml(String(v||''),{allowedTags:[],allowedAttributes:{}}).trim().slice(0,n);
+const clean=(v,n=200)=>String(v||'').replace(/<[^>]*>/g,'').replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,n);
 function session(res,u){const token=jwt.sign({sub:String(u.id),email:u.email.toLowerCase()},SECRET,{algorithm:'HS256',expiresIn:'7d',issuer:'mases-music',audience:'web'});res.cookie('session',token,{httpOnly:true,secure:isProd,sameSite:'strict',path:'/',maxAge:604800000})}
 app.use((req,_res,next)=>{try{const c=jwt.verify(req.cookies.session,SECRET,{algorithms:['HS256'],issuer:'mases-music',audience:'web'});req.user={id:String(c.sub),email:c.email,isAdmin:c.email===ADMIN}}catch{}next()});
 app.use('/api',(req,res,next)=>{if(['GET','HEAD','OPTIONS'].includes(req.method))return next();return req.get('origin')===ORIGIN?next():res.status(403).json({error:'Invalid request origin.'})});
