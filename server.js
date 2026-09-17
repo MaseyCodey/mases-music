@@ -13,14 +13,16 @@ if(!z.string().email().safeParse(ADMIN).success)throw Error('ADMIN_EMAIL must be
 if(!/^\$2[aby]\$/.test(ADMIN_HASH||''))throw Error('ADMIN_PASSWORD_HASH must be bcrypt.');
 if(!process.env.DATABASE_URL)throw Error('DATABASE_URL is required. Connect a Neon database.');
 const sql=neon(process.env.DATABASE_URL);
-const schemaSql=`CREATE TABLE IF NOT EXISTS users(id BIGSERIAL PRIMARY KEY,email TEXT UNIQUE NOT NULL,password_hash TEXT NOT NULL);
-CREATE TABLE IF NOT EXISTS tracks(id BIGINT PRIMARY KEY,title TEXT NOT NULL,artist TEXT NOT NULL,album TEXT DEFAULT '',cover_url TEXT DEFAULT '',filename TEXT NOT NULL,mime_type TEXT NOT NULL);
-CREATE TABLE IF NOT EXISTS requests(id BIGSERIAL PRIMARY KEY,song TEXT NOT NULL,artist TEXT DEFAULT '',notes TEXT DEFAULT '',user_email TEXT DEFAULT '',created_at TIMESTAMPTZ DEFAULT NOW());
-CREATE TABLE IF NOT EXISTS likes(user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,track_id BIGINT REFERENCES tracks(id) ON DELETE CASCADE,PRIMARY KEY(user_id,track_id));
-CREATE TABLE IF NOT EXISTS playlists(id BIGSERIAL PRIMARY KEY,user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,name TEXT NOT NULL,created_at TIMESTAMPTZ DEFAULT NOW());
-CREATE TABLE IF NOT EXISTS playlist_tracks(playlist_id BIGINT REFERENCES playlists(id) ON DELETE CASCADE,track_id BIGINT REFERENCES tracks(id) ON DELETE CASCADE,position INTEGER DEFAULT 0,PRIMARY KEY(playlist_id,track_id));`;
+const schemaSql=[
+  `CREATE TABLE IF NOT EXISTS users(id BIGSERIAL PRIMARY KEY,email TEXT UNIQUE NOT NULL,password_hash TEXT NOT NULL)`,
+  `CREATE TABLE IF NOT EXISTS tracks(id BIGINT PRIMARY KEY,title TEXT NOT NULL,artist TEXT NOT NULL,album TEXT DEFAULT '',cover_url TEXT DEFAULT '',filename TEXT NOT NULL,mime_type TEXT NOT NULL)`,
+  `CREATE TABLE IF NOT EXISTS requests(id BIGSERIAL PRIMARY KEY,song TEXT NOT NULL,artist TEXT DEFAULT '',notes TEXT DEFAULT '',user_email TEXT DEFAULT '',created_at TIMESTAMPTZ DEFAULT NOW())`,
+  `CREATE TABLE IF NOT EXISTS likes(user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,track_id BIGINT REFERENCES tracks(id) ON DELETE CASCADE,PRIMARY KEY(user_id,track_id))`,
+  `CREATE TABLE IF NOT EXISTS playlists(id BIGSERIAL PRIMARY KEY,user_id BIGINT REFERENCES users(id) ON DELETE CASCADE,name TEXT NOT NULL,created_at TIMESTAMPTZ DEFAULT NOW())`,
+  `CREATE TABLE IF NOT EXISTS playlist_tracks(playlist_id BIGINT REFERENCES playlists(id) ON DELETE CASCADE,track_id BIGINT REFERENCES tracks(id) ON DELETE CASCADE,position INTEGER DEFAULT 0,PRIMARY KEY(playlist_id,track_id))`
+];
 let schema;
-const query=async(text,params=[])=>{schema||=sql.query(schemaSql);await schema;return sql.query(text,params)};
+const query=async(text,params=[])=>{schema||=(async()=>{for(const statement of schemaSql)await sql.query(statement)})();await schema;return sql.query(text,params)};
 
 const app=express();app.disable('x-powered-by');app.set('trust proxy',1);
 app.use(helmet({contentSecurityPolicy:{directives:{defaultSrc:["'self'"],scriptSrc:["'self'"],styleSrc:["'self'"],imgSrc:["'self'",'data:','https:'],mediaSrc:["'self'",'blob:','https://raw.githubusercontent.com'],connectSrc:["'self'",'https://raw.githubusercontent.com'],objectSrc:["'none'"],baseUri:["'none'"],frameAncestors:["'none'"]}}}));
