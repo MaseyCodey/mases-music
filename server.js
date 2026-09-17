@@ -8,11 +8,13 @@ const isProd=process.env.NODE_ENV==='production',PORT=Number(process.env.PORT||3
 const SECRET=process.env.JWT_SECRET,ADMIN=(process.env.ADMIN_EMAIL||'').trim().toLowerCase(),ADMIN_HASH=process.env.ADMIN_PASSWORD_HASH;
 const ORIGIN=process.env.APP_ORIGIN||(process.env.VERCEL_PROJECT_PRODUCTION_URL?`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`:`http://localhost:${PORT}`);
 const GH_REPO=process.env.GITHUB_REPOSITORY||'',GH_BRANCH=process.env.GITHUB_BRANCH||'main',GH_DIR=(process.env.GITHUB_MUSIC_PATH||'music').replace(/^\/+|\/+$/g,''),GH_TOKEN=process.env.GITHUB_TOKEN||'';
-if(!SECRET||SECRET.length<32)throw Error('JWT_SECRET must be at least 32 characters.');
-if(!z.string().email().safeParse(ADMIN).success)throw Error('ADMIN_EMAIL must be valid.');
-if(!/^\$2[aby]\$/.test(ADMIN_HASH||''))throw Error('ADMIN_PASSWORD_HASH must be bcrypt.');
-if(!process.env.DATABASE_URL)throw Error('DATABASE_URL is required. Connect a Neon database.');
-const sql=neon(process.env.DATABASE_URL);
+const configErrors=[];
+if(!SECRET||SECRET.length<32)configErrors.push('JWT_SECRET');
+if(!z.string().email().safeParse(ADMIN).success)configErrors.push('ADMIN_EMAIL');
+if(!/^\$2[aby]\$\d\d\$[./A-Za-z0-9]{53}$/.test(ADMIN_HASH||''))configErrors.push('ADMIN_PASSWORD_HASH');
+if(!process.env.DATABASE_URL)configErrors.push('DATABASE_URL');
+let sql;
+try{if(process.env.DATABASE_URL)sql=neon(process.env.DATABASE_URL)}catch{configErrors.push('DATABASE_URL')}
 const schemaSql=[
   `CREATE TABLE IF NOT EXISTS users(id BIGSERIAL PRIMARY KEY,email TEXT UNIQUE NOT NULL,password_hash TEXT NOT NULL)`,
   `CREATE TABLE IF NOT EXISTS tracks(id BIGINT PRIMARY KEY,title TEXT NOT NULL,artist TEXT NOT NULL,album TEXT DEFAULT '',cover_url TEXT DEFAULT '',filename TEXT NOT NULL,mime_type TEXT NOT NULL)`,
@@ -22,7 +24,7 @@ const schemaSql=[
   `CREATE TABLE IF NOT EXISTS playlist_tracks(playlist_id BIGINT REFERENCES playlists(id) ON DELETE CASCADE,track_id BIGINT REFERENCES tracks(id) ON DELETE CASCADE,position INTEGER DEFAULT 0,PRIMARY KEY(playlist_id,track_id))`
 ];
 let schema;
-const query=async(text,params=[])=>{schema||=(async()=>{for(const statement of schemaSql)await sql.query(statement)})();await schema;return sql.query(text,params)};
+const query=async(text,params=[])=>{if(!sql)throw Error('Database is not configured.');schema||=(async()=>{for(const statement of schemaSql)await sql.query(statement)})();await schema;return sql.query(text,params)};
 
 const app=express();app.disable('x-powered-by');app.set('trust proxy',1);
 app.use(helmet({contentSecurityPolicy:{directives:{defaultSrc:["'self'"],scriptSrc:["'self'"],styleSrc:["'self'"],imgSrc:["'self'",'data:','https:'],mediaSrc:["'self'",'blob:','https://raw.githubusercontent.com'],connectSrc:["'self'",'https://raw.githubusercontent.com'],objectSrc:["'none'"],baseUri:["'none'"],frameAncestors:["'none'"]}}}));
@@ -39,6 +41,8 @@ app.post('/api/auth/signup',authLimit,async(req,res)=>{const p=creds.safeParse(r
 app.post('/api/auth/login',authLimit,async(req,res)=>{const p=creds.safeParse(req.body);if(!p.success)return res.status(401).json({error:'Invalid email or password.'});const email=p.data.email.toLowerCase();let u;if(email===ADMIN){if(!await bcrypt.compare(p.data.password,ADMIN_HASH))return res.status(401).json({error:'Invalid email or password.'});u={id:0,email}}else{const rows=await query('SELECT id,email,password_hash FROM users WHERE email=$1',[email]);u=rows[0];if(!u||!await bcrypt.compare(p.data.password,u.password_hash))return res.status(401).json({error:'Invalid email or password.'})}session(res,u);res.json({user:{email,isAdmin:email===ADMIN}})});
 app.post('/api/auth/logout',(_req,res)=>{res.clearCookie('session',{httpOnly:true,secure:isProd,sameSite:'strict',path:'/'});res.sendStatus(204)});
 app.get('/api/auth/me',(req,res)=>res.json({user:req.user?{email:req.user.email,isAdmin:req.user.isAdmin}:null}));
+app.get('/api/health',(_req,res)=>res.status(configErrors.length?503:200).json({ok:configErrors.length===0,misconfigured:[...new Set(configErrors)]}));
+app.use('/api',(req,res,next)=>configErrors.length?res.status(503).json({error:'Server configuration incomplete.',misconfigured:[...new Set(configErrors)]}):next());
 
 const ghHeaders=()=>({'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28',...(GH_TOKEN?{'Authorization':`Bearer ${GH_TOKEN}`}:{})});
 async function ghGet(file){if(!GH_REPO)return null;const r=await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${file}?ref=${encodeURIComponent(GH_BRANCH)}`,{headers:ghHeaders()});if(r.status===404)return null;if(!r.ok)throw Error(`GitHub read failed (${r.status})`);return r.json()}
