@@ -1,5 +1,14 @@
 [
   {
+    "id": 1789678866303,
+    "title": "From The Start",
+    "artist": "Good Kid",
+    "album": "From The Start (Single)",
+    "coverUrl": "https://i1.sndcdn.com/artworks-6XqQegnVczx7MvGD-oIO41Q-t500x500.jpg",
+    "path": "music/Good Kid - From The Start (Laufey Cover) - (320 Kbps).mp3",
+    "mimeType": "audio/mpeg"
+  },
+  {
     "id": 1789678505235,
     "title": "It Doesn't Matter",
     "artist": "The Living Tombstone",
