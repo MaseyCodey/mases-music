@@ -141,3 +141,13 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+# Mase's Music secrets, dependencies, and runtime data
+.env
+.env.*
+!.env.example
+node_modules/
+data/
+*.db
+*.db-shm
+*.db-wal
+npm-debug.log*
