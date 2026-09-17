@@ -1,7 +1,7 @@
 'use strict';
 process.env.NODE_ENV='test';process.env.APP_ORIGIN='http://localhost:3000';process.env.JWT_SECRET='test-secret-that-is-at-least-32-characters-long';process.env.ADMIN_EMAIL='admin@example.com';process.env.ADMIN_PASSWORD_HASH='$2b$12$rS1JcyJx6T8hCjCSUzYbAOOqTiKSqj9WMZPzpjYvNLitCF0ng7V3K';process.env.DATABASE_URL='postgresql://test:test@localhost/test';
 const test=require('node:test'),assert=require('node:assert/strict'),request=require('supertest'),app=require('../server');
-test('guest can reach public app but not personalize or administer',async()=>{await request(app).get('/').expect(200);await request(app).post('/api/tracks/1/like').set('Origin','http://localhost:3000').send({}).expect(401);await request(app).get('/api/admin/requests').expect(403)});
+test('guest can browse without a database session but not personalize or administer',async()=>{await request(app).get('/').expect(200);await request(app).get('/api/tracks').expect(200);await request(app).post('/api/tracks/1/like').set('Origin','http://localhost:3000').send({}).expect(401);await request(app).get('/api/admin/requests').expect(403)});
 test('cross-origin writes are blocked',async()=>{const r=await request(app).post('/api/requests').set('Origin','https://evil.example').send({song:'Test'}).expect(403);assert.equal(r.body.error,'Invalid request origin.')});
 test('session endpoint exposes no guest identity',async()=>{const r=await request(app).get('/api/auth/me').expect(200);assert.equal(r.body.user,null)});
 test('health check reports valid startup configuration',async()=>{const r=await request(app).get('/api/health').expect(200);assert.equal(r.body.ok,true);assert.deepEqual(r.body.misconfigured,[])});
