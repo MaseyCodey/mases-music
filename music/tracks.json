@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": 1789675618342,
+    "title": "Lush Life",
+    "artist": "Zara Larsson",
+    "album": "So Good",
+    "coverUrl": "https://i.scdn.co/image/ab67616d00001e026eaa0691ac9d790b41d21a91",
+    "path": "music/Zara Larsson - Lush Life (Lyrics) - (320 Kbps).mp3",
+    "mimeType": "audio/mpeg"
+  }
+]
