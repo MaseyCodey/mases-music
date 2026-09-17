@@ -1,5 +1,14 @@
 [
   {
+    "id": 1789687854084,
+    "title": "Die With A Smile",
+    "artist": "Lady Gaga & Bruno Mars",
+    "album": "Die With A Smile (Single)",
+    "coverUrl": "https://cdn-images.dzcdn.net/images/cover/4bd5903f4ce8f2601916bfadb44efe8a/1900x1900-000000-80-0-0.jpg",
+    "path": "music/Lady Gaga, Bruno Mars - Die With A Smile (Official Music Video) - (320 Kbps).mp3",
+    "mimeType": "audio/mpeg"
+  },
+  {
     "id": 1789687642795,
     "title": "APT.",
     "artist": "ROSÉ & Bruno Mars",
