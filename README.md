@@ -12,6 +12,7 @@ A guest-friendly Vercel music app with Neon Postgres accounts, private likes/pla
 2. Copy `.env.example` to `.env` and provide a Neon `DATABASE_URL`.
 3. Generate the admin hash: `npm run hash-password -- "YOUR_ADMIN_PASSWORD"`.
 4. Put that output in `ADMIN_PASSWORD_HASH`, set `ADMIN_EMAIL`, and create `JWT_SECRET` with `openssl rand -base64 48`.
+5. To add a second administrator, set `ADMIN_EMAIL_2` and a separately generated `ADMIN_PASSWORD_HASH_2`. Never commit either value.
 5. Run `npm start` and open `http://localhost:3000`.
 
 Never commit `.env`, tokens, or the SQLite database. Production requires HTTPS, `NODE_ENV=production`, and the exact public URL in `APP_ORIGIN`.

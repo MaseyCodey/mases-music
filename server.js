@@ -6,12 +6,16 @@ const {rateLimit}=require('express-rate-limit'),{z}=require('zod'),{neon}=requir
 
 const isProd=process.env.NODE_ENV==='production',PORT=Number(process.env.PORT||3000);
 const SECRET=process.env.JWT_SECRET,ADMIN=(process.env.ADMIN_EMAIL||'').trim().toLowerCase(),ADMIN_HASH=process.env.ADMIN_PASSWORD_HASH;
+const ADMIN_2=(process.env.ADMIN_EMAIL_2||'').trim().toLowerCase(),ADMIN_HASH_2=process.env.ADMIN_PASSWORD_HASH_2;
 const ORIGIN=process.env.APP_ORIGIN||(process.env.VERCEL_PROJECT_PRODUCTION_URL?`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`:`http://localhost:${PORT}`);
 const GH_REPO=process.env.GITHUB_REPOSITORY||'',GH_BRANCH=process.env.GITHUB_BRANCH||'main',GH_DIR=(process.env.GITHUB_MUSIC_PATH||'music').replace(/^\/+|\/+$/g,''),GH_TOKEN=process.env.GITHUB_TOKEN||'';
 const configErrors=[];
 if(!SECRET||SECRET.length<32)configErrors.push('JWT_SECRET');
 if(!z.string().email().safeParse(ADMIN).success)configErrors.push('ADMIN_EMAIL');
 if(!/^\$2[aby]\$\d\d\$[./A-Za-z0-9]{53}$/.test(ADMIN_HASH||''))configErrors.push('ADMIN_PASSWORD_HASH');
+if((ADMIN_2||ADMIN_HASH_2)&&!z.string().email().safeParse(ADMIN_2).success)configErrors.push('ADMIN_EMAIL_2');
+if((ADMIN_2||ADMIN_HASH_2)&&!/^\$2[aby]\$\d\d\$[./A-Za-z0-9]{53}$/.test(ADMIN_HASH_2||''))configErrors.push('ADMIN_PASSWORD_HASH_2');
+const adminHash=email=>email===ADMIN?ADMIN_HASH:email===ADMIN_2?ADMIN_HASH_2:null;
 if(!process.env.DATABASE_URL)configErrors.push('DATABASE_URL');
 let sql;
 try{if(process.env.DATABASE_URL)sql=neon(process.env.DATABASE_URL)}catch{configErrors.push('DATABASE_URL')}
@@ -33,13 +37,13 @@ app.use(express.json({limit:'32kb'}),express.urlencoded({extended:false,limit:'3
 const authLimit=rateLimit({windowMs:900000,limit:20}),writeLimit=rateLimit({windowMs:900000,limit:60});
 const clean=(v,n=200)=>String(v||'').replace(/<[^>]*>/g,'').replace(/[\u0000-\u001f\u007f]/g,' ').trim().slice(0,n);
 function session(res,u){const token=jwt.sign({sub:String(u.id),email:u.email.toLowerCase()},SECRET,{algorithm:'HS256',expiresIn:'7d',issuer:'mases-music',audience:'web'});res.cookie('session',token,{httpOnly:true,secure:isProd,sameSite:'strict',path:'/',maxAge:604800000})}
-app.use((req,_res,next)=>{try{const c=jwt.verify(req.cookies.session,SECRET,{algorithms:['HS256'],issuer:'mases-music',audience:'web'});req.user={id:String(c.sub),email:c.email,isAdmin:c.email===ADMIN}}catch{}next()});
+app.use((req,_res,next)=>{try{const c=jwt.verify(req.cookies.session,SECRET,{algorithms:['HS256'],issuer:'mases-music',audience:'web'});req.user={id:String(c.sub),email:c.email,isAdmin:Boolean(adminHash(c.email))}}catch{}next()});
 app.use('/api',(req,res,next)=>{if(['GET','HEAD','OPTIONS'].includes(req.method))return next();return req.get('origin')===ORIGIN?next():res.status(403).json({error:'Invalid request origin.'})});
 const need=(req,res,next)=>req.user?next():res.status(401).json({error:'Sign in required.'}),admin=(req,res,next)=>req.user?.isAdmin?next():res.status(403).json({error:'Forbidden.'});
 const creds=z.object({email:z.string().email().max(254),password:z.string().min(10).max(128)});
 
-app.post('/api/auth/signup',authLimit,async(req,res)=>{const p=creds.safeParse(req.body);if(!p.success)return res.status(400).json({error:'Enter a valid email and 10+ character password.'});const email=p.data.email.toLowerCase();if(email===ADMIN)return res.status(403).json({error:'Email reserved.'});try{const hash=await bcrypt.hash(p.data.password,12),rows=await query('INSERT INTO users(email,password_hash) VALUES($1,$2) RETURNING id',[email,hash]);session(res,{id:rows[0].id,email});res.status(201).json({user:{email,isAdmin:false}})}catch(e){if(e.code==='23505')return res.status(409).json({error:'Account already exists.'});throw e}});
-app.post('/api/auth/login',authLimit,async(req,res)=>{const p=creds.safeParse(req.body);if(!p.success)return res.status(401).json({error:'Invalid email or password.'});const email=p.data.email.toLowerCase();let u;if(email===ADMIN){if(!await bcrypt.compare(p.data.password,ADMIN_HASH))return res.status(401).json({error:'Invalid email or password.'});const rows=await query('INSERT INTO users(email,password_hash) VALUES($1,$2) ON CONFLICT(email) DO UPDATE SET password_hash=EXCLUDED.password_hash RETURNING id,email',[email,ADMIN_HASH]);u=rows[0]}else{const rows=await query('SELECT id,email,password_hash FROM users WHERE email=$1',[email]);u=rows[0];if(!u||!await bcrypt.compare(p.data.password,u.password_hash))return res.status(401).json({error:'Invalid email or password.'})}session(res,u);res.json({user:{email,isAdmin:email===ADMIN}})});
+app.post('/api/auth/signup',authLimit,async(req,res)=>{const p=creds.safeParse(req.body);if(!p.success)return res.status(400).json({error:'Enter a valid email and 10+ character password.'});const email=p.data.email.toLowerCase();if(adminHash(email))return res.status(403).json({error:'Email reserved.'});try{const hash=await bcrypt.hash(p.data.password,12),rows=await query('INSERT INTO users(email,password_hash) VALUES($1,$2) RETURNING id',[email,hash]);session(res,{id:rows[0].id,email});res.status(201).json({user:{email,isAdmin:false}})}catch(e){if(e.code==='23505')return res.status(409).json({error:'Account already exists.'});throw e}});
+app.post('/api/auth/login',authLimit,async(req,res)=>{const p=creds.safeParse(req.body);if(!p.success)return res.status(401).json({error:'Invalid email or password.'});const email=p.data.email.toLowerCase(),configuredAdminHash=adminHash(email);let u;if(configuredAdminHash){if(!await bcrypt.compare(p.data.password,configuredAdminHash))return res.status(401).json({error:'Invalid email or password.'});const rows=await query('INSERT INTO users(email,password_hash) VALUES($1,$2) ON CONFLICT(email) DO UPDATE SET password_hash=EXCLUDED.password_hash RETURNING id,email',[email,configuredAdminHash]);u=rows[0]}else{const rows=await query('SELECT id,email,password_hash FROM users WHERE email=$1',[email]);u=rows[0];if(!u||!await bcrypt.compare(p.data.password,u.password_hash))return res.status(401).json({error:'Invalid email or password.'})}session(res,u);res.json({user:{email,isAdmin:Boolean(configuredAdminHash)}})});
 app.post('/api/auth/logout',(_req,res)=>{res.clearCookie('session',{httpOnly:true,secure:isProd,sameSite:'strict',path:'/'});res.sendStatus(204)});
 app.get('/api/auth/me',(req,res)=>res.json({user:req.user?{email:req.user.email,isAdmin:req.user.isAdmin}:null}));
 app.get('/api/health',(_req,res)=>res.status(configErrors.length?503:200).json({ok:configErrors.length===0,misconfigured:[...new Set(configErrors)]}));
