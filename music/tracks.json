@@ -1,5 +1,14 @@
 [
   {
+    "id": 1789760141308,
+    "title": "Boston",
+    "artist": "Stella Lefty",
+    "album": "Boston (Single)",
+    "coverUrl": "https://m.media-amazon.com/images/I/51N9aElG-+L._UXNaN_FMjpg_QL85_.jpg",
+    "path": "music/Stella Lefty - Boston - (320 Kbps).mp3",
+    "mimeType": "audio/mpeg"
+  },
+  {
     "id": 1789758757993,
     "title": "Charlie's Inferno (Huss Valley Ver.)",
     "artist": "Fan-Made",
