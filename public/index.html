@@ -2,14 +2,14 @@
 <html lang="en" data-theme="spotify">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Mase's Music — stream, discover, and build your sound.">
-  <title>Mase's Music</title><link rel="stylesheet" href="/styles.css">
+  <meta id="siteDescription" name="description" content="Mase's Music — stream, discover, and build your sound.">
+  <title>Mase's Music</title><link id="siteIcon" rel="icon" href="/assets/music-logo.png"><link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <div id="ambient" aria-hidden="true"></div>
   <div class="app-shell">
     <aside id="sidebar">
-      <button class="brand" id="brand" aria-label="Mase's Music home"><i>♫</i><span>Mase's<br><b>Music</b></span></button>
+      <a class="brand" id="brand" data-brand-home href="/"><img data-brand-logo src="/assets/music-logo.png" alt=""><b data-brand-name>Mase's Music</b></a>
       <nav>
         <button class="nav active" data-page="home"><span>⌂</span> Discover</button>
         <button class="nav" data-page="library"><span>♥</span> Your Library</button>
@@ -23,9 +23,9 @@
       </div>
     </aside>
     <main>
-      <header class="topbar"><button id="menu" aria-label="Menu">☰</button><div class="search-shell"><div class="search"><span class="search-icon">⌕</span><input id="search" role="combobox" aria-label="Search music" aria-autocomplete="list" aria-controls="searchResults" aria-expanded="false" placeholder="Search songs, artists, albums…" autocomplete="off"><kbd>/</kbd><button id="clearSearch" aria-label="Clear search">×</button></div><div id="searchResults" class="search-results hidden" role="listbox"></div></div><div class="top-actions"><button id="surprise" class="icon-btn" title="Surprise me">✦</button><button id="profileBtn" class="avatar">G</button></div></header>
+      <header class="topbar"><button id="menu" aria-label="Menu">☰</button><a class="top-logo" id="topLogo" data-brand-home href="/" aria-label="Home"><img data-brand-logo src="/assets/music-logo.png" alt=""></a><div class="search-shell"><div class="search"><span class="search-icon">⌕</span><input id="search" role="combobox" aria-label="Search music" aria-autocomplete="list" aria-controls="searchResults" aria-expanded="false" placeholder="Search songs, artists, albums…" autocomplete="off"><kbd>/</kbd><button id="clearSearch" aria-label="Clear search">×</button></div><div id="searchResults" class="search-results hidden" role="listbox"></div></div><div class="top-actions"><button id="surprise" class="icon-btn" title="Surprise me">✦</button><button id="profileBtn" class="avatar">G</button></div></header>
       <section id="homePage" class="page active">
-        <div class="hero"><div class="hero-copy"><span class="eyebrow">MASE'S MIX</span><h1>Turn it up.<br><em>Stay awhile.</em></h1><p>Your whole soundtrack, no subscription and no interruptions.</p><div class="hero-actions"><button id="heroPlay" class="primary">▶ Play all</button><button id="heroShuffle" class="glass">⌘ Shuffle</button></div></div><div class="vinyl"><div>♫</div></div></div>
+        <div class="hero"><div class="hero-copy"><span class="eyebrow" data-brand-mix>MASE'S MUSIC MIX</span><h1>Turn it up.<br><em>Stay awhile.</em></h1><p>Your whole soundtrack, no subscription and no interruptions.</p><div class="hero-actions"><button id="heroPlay" class="primary">▶ Play all</button><button id="heroShuffle" class="glass">⌘ Shuffle</button></div></div><div class="vinyl"><div>♫</div></div></div>
         <div class="section-heading"><div><span class="eyebrow">EXPLORE</span><h2>All tracks</h2></div><div class="view-tools"><small id="count"></small><select id="sort"><option value="new">Recently added</option><option value="title">Title A–Z</option><option value="artist">Artist A–Z</option></select><button id="viewToggle" class="icon-btn" title="Change view">☷</button></div></div>
         <div id="tracks" class="track-grid"></div><div id="empty" class="empty hidden"><b>No songs found</b><span>Try a different search—or ask the admin to add something.</span></div>
       </section>
@@ -41,9 +41,9 @@
     </main>
   </div>
   <aside id="queuePanel"><div class="queue-head"><div><small>UP NEXT</small><h3>Play queue</h3></div><button id="closeQueue">×</button></div><div id="queue"></div><button id="clearQueue" class="outline">Clear queue</button></aside>
-  <div id="player" class="player disabled"><button class="now" id="nowOpen"><div id="mini">♫</div><div><b id="nowTitle">Choose a song</b><small id="nowArtist">Mase's Music</small></div></button><div class="transport"><div class="buttons"><button id="shuffle" title="Shuffle">⌘</button><button id="prev">↶</button><button id="play" class="play">▶</button><button id="next">↷</button><button id="repeat" title="Repeat mode">↻<sup>off</sup></button></div><div class="progress"><small id="current">0:00</small><input id="seek" type="range" min="0" max="1000" value="0"><small id="duration">0:00</small></div></div><div class="player-right"><button id="queueBtn" title="Queue">☷<span id="queueCount">0</span></button><span>◖</span><input id="volume" title="Volume" type="range" min="0" max="1" step=".01" value=".85"></div></div>
+  <div id="player" class="player disabled"><button class="now" id="nowOpen"><div id="mini">♫</div><div><b id="nowTitle">Choose a song</b><small id="nowArtist" data-brand-name>Mase's Music</small></div></button><div class="transport"><div class="buttons"><button id="shuffle" title="Shuffle">⌘</button><button id="prev">↶</button><button id="play" class="play">▶</button><button id="next">↷</button><button id="repeat" title="Repeat mode">↻<sup>off</sup></button></div><div class="progress"><small id="current">0:00</small><input id="seek" type="range" min="0" max="1000" value="0"><small id="duration">0:00</small></div></div><div class="player-right"><button id="queueBtn" title="Queue">☷<span id="queueCount">0</span></button><span>◖</span><input id="volume" title="Volume" type="range" min="0" max="1" step=".01" value=".85"></div></div>
   <dialog id="auth"><button class="close">×</button><span class="eyebrow">WELCOME IN</span><h2 id="authTitle">Log in</h2><p id="reason" class="muted">Save favorites and build playlists.</p><form id="authForm" class="form"><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Password<input name="password" type="password" minlength="10" maxlength="128" autocomplete="current-password" required></label><button class="primary">Continue</button></form><button id="switch" class="text-btn full">New here? Create an account</button></dialog>
   <dialog id="trackDialog" class="track-dialog"><button class="close">×</button><div id="trackPage"></div></dialog>
   <dialog id="playlistDialog"><button class="close">×</button><div id="playlistPage"></div></dialog>
-  <div id="toast" role="status"></div><div id="confetti" aria-hidden="true"></div><script src="/app.js" defer></script>
+  <div id="toast" role="status"></div><div id="confetti" aria-hidden="true"></div><script src="/config.js" defer></script><script src="/app.js" defer></script>
 </body></html>

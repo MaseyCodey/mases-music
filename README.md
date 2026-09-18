@@ -1,5 +1,9 @@
 # Mase's Music
 
+## Change the site name or logo
+
+Edit `public/config.js`. Change `siteName` once to update the browser title, sidebar, top bar, player, song pages, and branded labels. Change `logoUrl` to use a different logo, and `logoLink` to control where clicking either logo goes.
+
 A guest-friendly Vercel music app with Neon Postgres accounts, private likes/playlists, three persistent themes, secure GitHub-backed admin uploads, song requests, next-track prefetching, and Media Session controls.
 
 ## Setup
