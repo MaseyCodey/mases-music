@@ -1,5 +1,14 @@
 [
   {
+    "id": 1789690028290,
+    "title": "That's So True",
+    "artist": "Gracie Abrams",
+    "album": "That's So True (Single)",
+    "coverUrl": "https://i1.sndcdn.com/artworks-ilrqxzNv8UZiXqIa-zLmXFA-t500x500.jpg",
+    "path": "music/Gracie Abrams - That's So True (Clean - Lyrics) - (320 Kbps).mp3",
+    "mimeType": "audio/mpeg"
+  },
+  {
     "id": 1789689862118,
     "title": "Stateside",
     "artist": "PinkPanthress & Zara Larsson",
