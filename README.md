@@ -25,6 +25,12 @@ The catalog is stored in `music/tracks.json`. Audio is publicly accessible becau
 
 To serve audio from a faster object-storage/CDN host while keeping the catalog in GitHub, set `AUDIO_BASE_URL` to its HTTPS public origin, such as `https://media.example.com`. Preserve the same object key as each track's `path`. If a remote filename differs (for example, it ends in `(7).mp3`), add an `audioPath` property to only that entry in `music/tracks.json`. Spaces, Unicode, and parentheses are encoded automatically. A track that has not been copied to the CDN yet can temporarily set `"audioSource": "github"`.
 
+### Direct Admin Studio uploads to R2
+
+Create an R2 API token scoped to **Object Read & Write** for only the music bucket. Add `R2_ACCOUNT_ID`, `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, and `R2_BUCKET` in Vercel's encrypted environment settings; never put their real values in GitHub. Admin Studio requests a five-minute signed URL, uploads the audio directly to R2, verifies the completed object server-side, then updates GitHub's `music/tracks.json`. New objects use randomized names and can be up to 50 MB.
+
+The R2 bucket CORS policy must allow `GET`, `HEAD`, and `PUT` from the production site origin, with `Range` and `Content-Type` allowed headers. For this deployment, allow both `https://music.masey.space` and `https://samp3.masey.space` if both domains remain in use.
+
 ## Vercel + Neon deployment
 
 Import this repository into Vercel, then add a Neon Postgres integration from the Vercel Marketplace. Neon supplies `DATABASE_URL`. Add every remaining value from `.env.example` in Vercel's Environment Variables settings and redeploy. `api/index.js` and `vercel.json` provide the serverless entry point.
