@@ -1,10 +1,10 @@
 [
   {
     "id": 1789777903003,
-    "title": "Charlie's Inferno (Huss Valley)",
-    "artist": "Fan-Made",
+    "title": "Charlie's Inferno",
+    "artist": "That Handsome Devil",
     "album": "",
-    "coverUrl": "https://media.masey.space/cover%20art/Charlies%20Inferno%20-%20Huss%20Ver.png",
+    "coverUrl": "",
     "path": "music/Charlie's Inferno but he's running from his demons till he is exhausted [Huss Valley] - (320 Kbps) (1).mp3",
     "mimeType": "audio/mpeg"
   },
@@ -13,7 +13,7 @@
     "title": "Headlock",
     "artist": "Imogen Heap",
     "album": "Speak for Yourself",
-    "coverUrl": "https://media.masey.space/cover%20art/HeadLock%20-%20Imogen%20Heap.png",
+    "coverUrl": "",
     "path": "music/Imogen Heap - Headlock (Official Video) - (320 Kbps) (2).mp3",
     "mimeType": "audio/mpeg"
   },
@@ -22,7 +22,7 @@
     "title": "Boston",
     "artist": "Stella Lefty",
     "album": "",
-    "coverUrl": "https://media.masey.space/cover%20art/Boston%20-%20Stella%20Lefty.jpg",
+    "coverUrl": "",
     "path": "music/Stella Lefty - Boston - (320 Kbps) (1).mp3",
     "mimeType": "audio/mpeg"
   },
@@ -178,7 +178,6 @@
     "album": "Thick Of Hit (Single)",
     "coverUrl": "https://i1.sndcdn.com/artworks-hUzvtpPmOwbiSDia-K50hpg-t500x500.png",
     "path": "music/The Larping Tombstone - _Thick Of It (Thick Of HiT)_ (Remix) - (320 Kbps).mp3",
-    "audioSource": "github",
     "mimeType": "audio/mpeg"
   },
   {
