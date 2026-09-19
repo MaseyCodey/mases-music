@@ -23,6 +23,8 @@ Admin Studio can commit uploaded audio directly to the repository's `music/` fol
 
 The catalog is stored in `music/tracks.json`. Audio is publicly accessible because this repository is public. Vercel-hosted Studio uploads are limited to 4 MB, so use compressed MP3/M4A files. Only upload music you have permission to distribute.
 
+To serve audio from a faster object-storage/CDN host while keeping the catalog in GitHub, set `AUDIO_BASE_URL` to its HTTPS public origin, such as `https://media.example.com`. Preserve the same object key as each track's `path`. If a remote filename differs (for example, it ends in `(7).mp3`), add an `audioPath` property to only that entry in `music/tracks.json`. Spaces, Unicode, and parentheses are encoded automatically.
+
 ## Vercel + Neon deployment
 
 Import this repository into Vercel, then add a Neon Postgres integration from the Vercel Marketplace. Neon supplies `DATABASE_URL`. Add every remaining value from `.env.example` in Vercel's Environment Variables settings and redeploy. `api/index.js` and `vercel.json` provide the serverless entry point.
