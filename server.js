@@ -9,7 +9,7 @@ const SECRET=process.env.JWT_SECRET,ADMIN=(process.env.ADMIN_EMAIL||'').trim().t
 const ADMIN_2=(process.env.ADMIN_EMAIL_2||'').trim().toLowerCase(),ADMIN_HASH_2=process.env.ADMIN_PASSWORD_HASH_2;
 const ORIGIN=process.env.APP_ORIGIN||(process.env.VERCEL_PROJECT_PRODUCTION_URL?`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`:`http://localhost:${PORT}`);
 const GH_REPO=process.env.GITHUB_REPOSITORY||'',GH_BRANCH=process.env.GITHUB_BRANCH||'main',GH_DIR=(process.env.GITHUB_MUSIC_PATH||'music').replace(/^\/+|\/+$/g,''),GH_TOKEN=process.env.GITHUB_TOKEN||'';
-const AUDIO_BASE_URL=(process.env.AUDIO_BASE_URL||'').trim().replace(/\/+$/,'');
+const AUDIO_BASE_URL=(process.env.AUDIO_BASE_URL||'https://media.masey.space').trim().replace(/\/+$/,'');
 const configErrors=[];
 let audioOrigin='';
 if(AUDIO_BASE_URL){try{const parsed=new URL(AUDIO_BASE_URL);if(parsed.protocol!=='https:')throw Error();audioOrigin=parsed.origin}catch{configErrors.push('AUDIO_BASE_URL')}}
@@ -78,7 +78,8 @@ async function ghPut(file,content,message,sha){if(!GH_REPO||!GH_TOKEN)throw Erro
 async function ghDelete(file,message,sha){if(!GH_REPO||!GH_TOKEN)throw Error('GitHub storage is not configured.');const r=await fetch(`https://api.github.com/repos/${GH_REPO}/contents/${file}`,{method:'DELETE',headers:{...ghHeaders(),'Content-Type':'application/json'},body:JSON.stringify({message,sha,branch:GH_BRANCH})});if(!r.ok)throw Error(`GitHub delete failed (${r.status})`)}
 async function syncTracks(items){if(!items.length)return;await query(`INSERT INTO tracks(id,title,artist,album,cover_url,filename,mime_type) SELECT id,title,artist,COALESCE(album,''),COALESCE("coverUrl",''),COALESCE(path,''),COALESCE("mimeType",'audio/mpeg') FROM jsonb_to_recordset($1::jsonb) AS t(id bigint,title text,artist text,album text,"coverUrl" text,path text,"mimeType" text) ON CONFLICT(id) DO UPDATE SET title=EXCLUDED.title,artist=EXCLUDED.artist,album=EXCLUDED.album,cover_url=EXCLUDED.cover_url,filename=EXCLUDED.filename,mime_type=EXCLUDED.mime_type`,[JSON.stringify(items)])}
 const encodeObjectPath=value=>String(value||'').split('/').filter(Boolean).map(encodeURIComponent).join('/');
-function trackAudioUrl(track){const objectPath=encodeObjectPath(track.audioPath||track.path);return AUDIO_BASE_URL?`${AUDIO_BASE_URL}/${objectPath}`:`https://raw.githubusercontent.com/${GH_REPO}/${encodeURIComponent(GH_BRANCH)}/${objectPath}`}
+const githubAudioUrl=track=>`https://raw.githubusercontent.com/${GH_REPO}/${encodeURIComponent(GH_BRANCH)}/${encodeObjectPath(track.path)}`;
+function trackAudioUrl(track){if(!AUDIO_BASE_URL||track.audioSource==='github')return githubAudioUrl(track);return `${AUDIO_BASE_URL}/${encodeObjectPath(track.audioPath||track.path)}`}
 app.get('/api/tracks',async(_req,res)=>{const items=await catalog();res.json({tracks:items.map(x=>({...x,audioUrl:trackAudioUrl(x),liked:false,plays:0}))})});
 app.get('/api/track-stats',async(req,res)=>{res.set('Cache-Control','private, no-store');const [counts,likes]=await Promise.all([query('SELECT id,plays FROM tracks'),req.user?query('SELECT track_id FROM likes WHERE user_id=$1',[req.user.id]):[]]);res.json({plays:Object.fromEntries(counts.map(x=>[String(x.id),Number(x.plays)])),liked:likes.map(x=>String(x.track_id))})});
 app.post('/api/tracks/:id/play',playLimit,async(req,res)=>{if(!/^\d+$/.test(req.params.id))return res.status(400).json({error:'Invalid track.'});const rows=await query('UPDATE tracks SET plays=plays+1 WHERE id=$1 RETURNING plays',[req.params.id]);if(!rows.length)return res.sendStatus(404);res.json({plays:Number(rows[0].plays)})});
