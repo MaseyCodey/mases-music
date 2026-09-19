@@ -1,29 +1,29 @@
 [
   {
-    "id": 1789767025995,
+    "id": 1789777903003,
+    "title": "Charlie's Inferno",
+    "artist": "That Handsome Devil",
+    "album": "",
+    "coverUrl": "",
+    "path": "music/Charlie's Inferno but he's running from his demons till he is exhausted [Huss Valley] - (320 Kbps) (1).mp3",
+    "mimeType": "audio/mpeg"
+  },
+  {
+    "id": 1789777903002,
     "title": "Headlock",
     "artist": "Imogen Heap",
-    "album": "Headlock (Single)",
-    "coverUrl": "https://images.genius.com/69ccd4d1a6353490e157014f916f3ea3.900x900x1.png",
-    "path": "music/Imogen Heap - Headlock (Official Video) - (320 Kbps).mp3",
+    "album": "Speak for Yourself",
+    "coverUrl": "",
+    "path": "music/Imogen Heap - Headlock (Official Video) - (320 Kbps) (2).mp3",
     "mimeType": "audio/mpeg"
   },
   {
-    "id": 1789760141308,
+    "id": 1789777903001,
     "title": "Boston",
     "artist": "Stella Lefty",
-    "album": "Boston (Single)",
-    "coverUrl": "https://m.media-amazon.com/images/I/51N9aElG-+L._UXNaN_FMjpg_QL85_.jpg",
-    "path": "music/Stella Lefty - Boston - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
-  },
-  {
-    "id": 1789758757993,
-    "title": "Charlie's Inferno (Huss Valley Ver.)",
-    "artist": "Fan-Made",
-    "album": "Charlie's Inferno (Huss Valley Ver.) Single",
-    "coverUrl": "https://github.com/MaseyCodey/mases-music/blob/main/custom%20cover%20art/Pink%20White%20Retro%20Y2K%20Logo.png?raw=true",
-    "path": "music/Charlie's Inferno but he's running from his demons till he is exhausted [Huss Valley] - (320 Kbps).mp3",
+    "album": "",
+    "coverUrl": "",
+    "path": "music/Stella Lefty - Boston - (320 Kbps) (1).mp3",
     "mimeType": "audio/mpeg"
   },
   {
@@ -33,6 +33,7 @@
     "album": "Party In The U.S.A. (Single)",
     "coverUrl": "https://m.media-amazon.com/images/I/51i9R4RACwL._UXNaN_FMjpg_QL85_.jpg",
     "path": "music/Miley Cyrus - Party In The U.S.A. (Official Video) - (320 Kbps).mp3",
+    "audioPath": "music/Miley Cyrus - Party In The U.S.A. (Official Video) - (320 Kbps) (1).mp3",
     "mimeType": "audio/mpeg"
   },
   {
@@ -177,6 +178,7 @@
     "album": "Thick Of Hit (Single)",
     "coverUrl": "https://i1.sndcdn.com/artworks-hUzvtpPmOwbiSDia-K50hpg-t500x500.png",
     "path": "music/The Larping Tombstone - _Thick Of It (Thick Of HiT)_ (Remix) - (320 Kbps).mp3",
+    "audioSource": "github",
     "mimeType": "audio/mpeg"
   },
   {
@@ -195,6 +197,7 @@
     "album": "Larping the Rooms (Single)",
     "coverUrl": "https://i.scdn.co/image/ab67616d0000b2731f26e0eaedff84ee13a48bac",
     "path": "music/The Larping Tombstone - _Looping the Rooms (Larping the Rooms)_ (Remix) - (320 Kbps) (mp3cut.net).mp3",
+    "audioSource": "github",
     "mimeType": "audio/mpeg"
   },
   {
