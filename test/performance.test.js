@@ -16,12 +16,13 @@ test('catalog is usable without any database requests and concurrent loads share
     await new Promise(resolve=>setTimeout(resolve,20));
     return new Response(JSON.stringify({content:Buffer.from(JSON.stringify([
       {id:1,title:'Song',artist:'Artist',path:'music/song.mp3'},
-      {id:2,title:'Odd name',artist:'Artist',path:'music/original.mp3',audioPath:'music/Song (320 Kbps) (7).mp3'}
+      {id:2,title:'Odd name',artist:'Artist',path:'music/original.mp3',audioPath:'music/Song (320 Kbps) (7).mp3'},
+      {id:3,title:'GitHub fallback',artist:'Artist',path:'music/fallback.mp3',audioSource:'github'}
     ])).toString('base64')}),{status:200});
   });
   const responses=await Promise.all(Array.from({length:8},()=>request(app).get('/api/tracks').expect(200)));
   assert.equal(calls,1);
-  for(const response of responses){assert.equal(response.body.tracks[0].title,'Song');assert.equal(response.body.tracks[0].audioUrl,'https://media.example.com/music/song.mp3');assert.equal(response.body.tracks[0].liked,false);assert.equal(response.body.tracks[1].audioUrl,'https://media.example.com/music/Song%20(320%20Kbps)%20(7).mp3')}
+  for(const response of responses){assert.equal(response.body.tracks[0].title,'Song');assert.equal(response.body.tracks[0].audioUrl,'https://media.example.com/music/song.mp3');assert.equal(response.body.tracks[0].liked,false);assert.equal(response.body.tracks[1].audioUrl,'https://media.example.com/music/Song%20(320%20Kbps)%20(7).mp3');assert.equal(response.body.tracks[2].audioUrl,'https://raw.githubusercontent.com/example/music/main/music/fallback.mp3')}
   await request(app).get('/api/tracks').expect(200);
   assert.equal(calls,1);
 });
