@@ -7,7 +7,8 @@
     "coverUrl": "https://media.masey.space/cover%20art/Screenshot%202026-09-19%20083510.png",
     "path": "music/12584600-cef5-4c9f-984b-70866bbbe166.mp3",
     "audioPath": "music/12584600-cef5-4c9f-984b-70866bbbe166.mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 91.2
   },
   {
     "id": 1789777903003,
@@ -16,7 +17,8 @@
     "album": "",
     "coverUrl": "https://media.masey.space/cover%20art/Charlies%20Inferno%20-%20Huss%20Ver.png",
     "path": "music/Charlie's Inferno but he's running from his demons till he is exhausted [Huss Valley] - (320 Kbps) (1).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 119.4
   },
   {
     "id": 1789777903002,
@@ -25,7 +27,8 @@
     "album": "Speak for Yourself",
     "coverUrl": "https://media.masey.space/cover%20art/HeadLock%20-%20Imogen%20Heap.png",
     "path": "music/Imogen Heap - Headlock (Official Video) - (320 Kbps) (2).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 215
   },
   {
     "id": 1789777903001,
@@ -34,7 +37,8 @@
     "album": "",
     "coverUrl": "https://media.masey.space/cover%20art/Boston%20-%20Stella%20Lefty.jpg",
     "path": "music/Stella Lefty - Boston - (320 Kbps) (1).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 170.9
   },
   {
     "id": 1789754126425,
@@ -44,7 +48,8 @@
     "coverUrl": "https://m.media-amazon.com/images/I/51i9R4RACwL._UXNaN_FMjpg_QL85_.jpg",
     "path": "music/Miley Cyrus - Party In The U.S.A. (Official Video) - (320 Kbps).mp3",
     "audioPath": "music/Miley Cyrus - Party In The U.S.A. (Official Video) - (320 Kbps) (1).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 207.2
   },
   {
     "id": 1789689862118,
@@ -53,7 +58,8 @@
     "album": "Stateside (Single)",
     "coverUrl": "https://i.discogs.com/EtoI60HKgdGYDB2gYaMxc1CMemck_9YX_BWhrr1LYsg/rs:fit/g:sm/q:90/h:593/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3MzEw/ODY1LTE3Nzg3NzQ0/MjctNTExOS5qcGVn.jpeg",
     "path": "music/PinkPantheress - Stateside + Zara Larsson (Official Video) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 193.2
   },
   {
     "id": 1789689555107,
@@ -62,7 +68,8 @@
     "album": "Messy (Single)",
     "coverUrl": "https://m.media-amazon.com/images/M/MV5BMTQ2OTM3NDAtNzlmZS00NjcxLTk3NzctZTIyZjM3YjVmZDUzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
     "path": "music/Lola Young - Messy (Clean - Lyrics) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 293.5
   },
   {
     "id": 1789689021087,
@@ -71,7 +78,8 @@
     "album": "Love Me Not (Single)",
     "coverUrl": "https://cdn-images.dzcdn.net/images/cover/05589991c61f6a7305e78aec8414b5ac/0x1900-000000-80-0-0.jpg",
     "path": "music/Ravyn Lenae - Love Me Not (Lyrics) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 213.1
   },
   {
     "id": 1789688772321,
@@ -80,7 +88,8 @@
     "album": "Please Please Please (Single)",
     "coverUrl": "https://cdn-images.dzcdn.net/images/cover/0fd6e3b346b959a8781ccfa89b63607a/1900x1900-000000-80-0-0.jpg",
     "path": "music/Sabrina Carpenter - Please Please Please (Clean - Lyrics) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 186.5
   },
   {
     "id": 1789688562347,
@@ -89,7 +98,8 @@
     "album": "Manchild (Single)",
     "coverUrl": "https://cdn-images.dzcdn.net/images/cover/0fd6e3b346b959a8781ccfa89b63607a/1900x1900-000000-80-0-0.jpg",
     "path": "music/Sabrina Carpenter - Manchild (Clean - Lyrics) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 212.9
   },
   {
     "id": 1789688382275,
@@ -98,7 +108,8 @@
     "album": "Bed Chem (Single)",
     "coverUrl": "https://cdn-images.dzcdn.net/images/cover/0fd6e3b346b959a8781ccfa89b63607a/1900x1900-000000-80-0-0.jpg",
     "path": "music/Sabrina Carpenter - Bed Chem (Clean Version) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 172.3
   },
   {
     "id": 1789688065512,
@@ -107,7 +118,8 @@
     "album": "Sorry I'm Here For Someone Else (Single)",
     "coverUrl": "https://m.media-amazon.com/images/I/51wPTaQlvaL._UXNaN_FMjpg_QL85_.jpg",
     "path": "music/Benson Boone - Sorry I'm Here For Someone Else (Official Lyric Video) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 156.4
   },
   {
     "id": 1789687854084,
@@ -116,7 +128,8 @@
     "album": "Die With A Smile (Single)",
     "coverUrl": "https://cdn-images.dzcdn.net/images/cover/4bd5903f4ce8f2601916bfadb44efe8a/1900x1900-000000-80-0-0.jpg",
     "path": "music/Lady Gaga, Bruno Mars - Die With A Smile (Official Music Video) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 252.4
   },
   {
     "id": 1789687642795,
@@ -125,7 +138,8 @@
     "album": "APT. (Single)",
     "coverUrl": "https://cdn-images.dzcdn.net/images/cover/258e6042338ce64bb4157c0c94b232ac/500x500.jpg",
     "path": "music/ROSÉ & Bruno Mars - APT. (Official Music Video) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 173.4
   },
   {
     "id": 1789687212671,
@@ -134,7 +148,8 @@
     "album": "Choosin' Texas (Single)",
     "coverUrl": "https://m.media-amazon.com/images/I/51+bpW28KRL._AC_.jpg",
     "path": "music/Ella Langley - Choosin' Texas (Official Lyric Video) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 231
   },
   {
     "id": 1789678866303,
@@ -143,7 +158,8 @@
     "album": "From The Start (Single)",
     "coverUrl": "https://i1.sndcdn.com/artworks-6XqQegnVczx7MvGD-oIO41Q-t500x500.jpg",
     "path": "music/Good Kid - From The Start (Laufey Cover) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 150.1
   },
   {
     "id": 1789678505235,
@@ -152,7 +168,8 @@
     "album": "It Doesn't Matter (Single)",
     "coverUrl": "https://i.scdn.co/image/ab67616d0000b2737f89e5fe0a018b5f5559bb42",
     "path": "music/Five Nights at Freddy's_ Secret of the Mimic Song - It Doesn't Matter - The Living Tombstone - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 230
   },
   {
     "id": 1789677953318,
@@ -161,7 +178,8 @@
     "album": "KEEP ME GOING (BIRDBRAIN) (Single)",
     "coverUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTd6rH63hVnDRTvoA_gVaTRhHOd8Kx-JcZ5EEp0IYL8pLlATn5iE1Phdkg&s=10",
     "path": "music/SLAYR - KEEP ME GOING (BIRDBRAIN) - UNOFFICIAL LYRIC VIDEO - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 130
   },
   {
     "id": 1789677159053,
@@ -170,7 +188,8 @@
     "album": "Sneakers O'Toole (Remix) (Single)",
     "coverUrl": "https://i.scdn.co/image/ab67616d0000b2731fb46389637ae7edf1335b3b",
     "path": "music/The Larping Tombstone - _Sneakers O'Toole_ (Remix) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 60
   },
   {
     "id": 1789676987278,
@@ -179,7 +198,8 @@
     "album": "John Pork (Remix) (Single)",
     "coverUrl": "https://i1.sndcdn.com/artworks-txT013HmR3qjnDDh-akAy7Q-t500x500.jpg",
     "path": "music/John Pork (Remix) - Preston Tran feat. @secretasian6 (Lyric Video) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 158.5
   },
   {
     "id": 1789676746253,
@@ -188,7 +208,8 @@
     "album": "Thick Of Hit (Single)",
     "coverUrl": "https://i1.sndcdn.com/artworks-hUzvtpPmOwbiSDia-K50hpg-t500x500.png",
     "path": "music/The Larping Tombstone - _Thick Of It (Thick Of HiT)_ (Remix) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 74.2
   },
   {
     "id": 1789676383646,
@@ -197,7 +218,8 @@
     "album": "Wizox Ban This Guy (Single)",
     "coverUrl": "https://i.scdn.co/image/ab67616d00001e02142c7058791f590fe3179e46",
     "path": "music/Wizox ban this guy song - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 180.2
   },
   {
     "id": 1789676122832,
@@ -207,7 +229,8 @@
     "coverUrl": "https://i.scdn.co/image/ab67616d0000b2731f26e0eaedff84ee13a48bac",
     "path": "music/The Larping Tombstone - _Looping the Rooms (Larping the Rooms)_ (Remix) - (320 Kbps) (mp3cut.net).mp3",
     "audioPath": "music/music_The Larping Tombstone - _Looping the Rooms (Larping the Rooms)_ (Remix) - (320 Kbps) (mp3cut.net).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 146.8
   },
   {
     "id": 1789675618342,
@@ -216,6 +239,7 @@
     "album": "So Good",
     "coverUrl": "https://i.scdn.co/image/ab67616d00001e026eaa0691ac9d790b41d21a91",
     "path": "music/Zara Larsson - Lush Life (Lyrics) - (320 Kbps).mp3",
-    "mimeType": "audio/mpeg"
+    "mimeType": "audio/mpeg",
+    "duration": 201.1
   }
 ]
