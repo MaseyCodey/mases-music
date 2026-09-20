@@ -1,5 +1,16 @@
 [
   {
+    "id": 1789914686240,
+    "title": "From The Start",
+    "artist": "Laufey",
+    "album": "From The Start (Single)",
+    "coverUrl": "https://media.masey.space/cover%20art/From%20The%20Start.jpg",
+    "path": "music/2389622d-138f-45b6-a700-d4a958920668.mp3",
+    "audioPath": "music/2389622d-138f-45b6-a700-d4a958920668.mp3",
+    "mimeType": "audio/mpeg",
+    "duration": 169.6
+  },
+  {
     "id": 1789832414978,
     "title": "Waka Waka (IShowSpeed Ver.)",
     "artist": "NEVERMUTE+",
